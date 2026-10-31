@@ -1,29 +1,36 @@
 # Glitch web edition: checklist
 
-## Done
-- [x] Flash (Gemini) and cognition (OpenRouter) modes; each keeps its own chat history
-- [x] Supabase email + password sign-in / create account (no sign-up code)
-- [x] PC tunnel and bridge removed; runs entirely on Vercel + Supabase
-- [x] Upload from the browser (PDF, Word, text/code, images; 25 MB) into a private per-user folder
-- [x] Download and delete from the **files** panel (uploads and files Glitch made)
-- [x] Glitch can write code/text files (`create_file`), read them back, list them, and search the web
-- [x] Flash reads PDFs and images natively; cognition gets PDF/Word as extracted text
-- [x] Logo = your `.ico`; layout works on phones
+## Current features
+- [x] Flash (Gemini 2.5 Flash-Lite free tier) and Cognition (NVIDIA Nemotron 3 Ultra free)
+- [x] Supabase email + password sign-in and anonymous guest sessions
+- [x] Guest quota: 30 messages per guest account, enforced by atomic Supabase RPC
+- [x] Web search tool available in both modes through Google Search grounding
+- [x] Upload, download, file listing, file generation, and file-reading features removed
+- [x] Browser layout remains mobile-friendly
 - [x] Optional `ALLOWED_EMAILS` allow-list
 
-## Removed (needed the PC)
-- [x] Running code, opening apps, mouse/screen, Selenium browser, YouTube, Gmail, Word-notes output
+## Setup / deployment
+- [ ] Supabase: run the updated `supabase.sql`
+- [ ] Supabase: enable Anonymous Sign-Ins if guests should be allowed
+- [ ] Vercel env vars: `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `GOOGLE_API_KEY`, `OPENROUTER_API_KEY` (+ optional `ALLOWED_EMAILS`)
+- [ ] Redeploy Vercel
+- [ ] Smoke test: register/sign in, send messages in both modes, test web search
+- [ ] Test guest quota reaches 0 after 30 successful guest requests and rejects the next request
+- [ ] Confirm direct Storage access is denied by the removed Storage policies
 
-## Your steps
-- [ ] Supabase: create project, run `supabase.sql`, decide on Confirm email
-- [ ] Copy URL, anon key, service_role key
-- [ ] Vercel env vars: `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `GOOGLE_API_KEY`, `OPENROUTER_API_KEY`, `OPENROUTER_MODEL` (+ optional `GEMINI_MODEL`, `ALLOWED_EMAILS`)
-- [ ] `vercel --prod`, create your account
-- [ ] Decide sign-up policy: `ALLOWED_EMAILS`, or switch off sign-ups in Supabase
-- [ ] Smoke test: upload a PDF and ask for a summary; ask for a small Python script, then download it
+## Notes
+- The OpenRouter free endpoint has provider-side rate limits and availability constraints.
+- Provider keys must remain server-side; never commit real keys.
+- Old objects in the private Supabase Storage bucket are not automatically deleted by the migration.
 
-## Not done (your call)
-- [ ] Chat history across devices (today it lives in each browser; could be a Supabase table)
-- [ ] Running generated code (no safe place to run it on Vercel)
-- [ ] Gmail / Word-notes output on the web
-- [ ] Real PDF editing (reading only)
+- [ ] Verify Google Search is available in both Flash and Cognition; ask each mode for current news and confirm source URLs are included.
+
+
+## Temporary local chat history (no memory feature)
+- [x] Remove the My memory UI and memory prompt injection.
+- [x] Email-account chat history is stored in this browser's localStorage, separately by user ID and mode.
+- [x] Guest chat history is not persisted.
+- [ ] Sign in with email account A, send messages in Flash and Cognition, and verify each mode restores its own history after refresh.
+- [ ] Sign out and sign in as account B in the same browser; verify B sees a separate history.
+- [ ] Verify history does not sync to another browser/device (temporary limitation).
+- [ ] Verify New chat clears the current mode's local history.

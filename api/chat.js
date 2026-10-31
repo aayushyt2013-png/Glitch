@@ -1,32 +1,34 @@
-// POST /api/chat  { mode: 'flash'|'cognition', messages: [{role, content, attachments?: ['<uid>/uploads/x.pdf']}] }
-// Needs a signed-in Supabase user (Authorization: Bearer <access token>).
-const { requireUser } = require('./_lib');
-const { validPath, loadFile } = require('./_files');
-const { systemPrompt, runGemini, runOpenRouter } = require('./_llm');
+// POST /api/chat { mode: 'flash'|'cognition', messages: [{role, content}] }
+const { requireUser, consumeGuestMessage } = require('./_lib');
+const { systemPrompt, runGemini, runOpenRouter, runTool } = require('./_llm');
 
 const MAX_MESSAGES = 20;
-const MAX_CHARS = 8000;
-const MAX_FILES = 4;               // newest attachments across the whole conversation
+const MAX_CHARS = 30000;
+const GUEST_MESSAGE_LIMIT = 30;
 
-function clean(raw, userId) {
+// Catch clear code-generation requests in Flash before sending them to a model.
+function isCodeWritingRequest(text) {
+  const t = String(text || '').toLowerCase();
+  const asksToCreate = /\b(write|generate|create|build|make|implement|code|program|develop|scaffold|fix|debug|refactor|edit|update)\b/.test(t);
+  const codeSubject = /\b(code|coding|program|script|function|class|component|website|web app|application|app|html|css|javascript|typescript|python|java|c\+\+|react|node\.js|api endpoint|sql query|regex|algorithm|bug|error|stack trace|source file|files?|repository|repo|project|calculator|game|bot|extension|plugin|automation|tool|dashboard|landing page|portfolio|chatbot)\b/.test(t);
+  return asksToCreate && codeSubject;
+}
+
+// Queries that depend on changing facts should get Google Search context before either model answers.
+function needsLiveSearch(text) {
+  const t = String(text || '').toLowerCase();
+  return /\b(latest|current|currently|today|tonight|right now|right-now|real[ -]?time|up[ -]?to[ -]?date|recent|breaking|news|weather|forecast|temperature|stock price|share price|crypto price|exchange rate|currency rate|live score|score now|standings|schedule|traffic|election|polls|price of|cost of|availability|opening hours|released|release date|new version|version of|updates?|search the web|look up|google search|who won|what happened)\b/.test(t);
+}
+
+function clean(raw) {
   if (!Array.isArray(raw)) return null;
   const out = [];
   for (const m of raw.slice(-MAX_MESSAGES)) {
     if (!m || (m.role !== 'user' && m.role !== 'assistant')) continue;
     const text = String(m.content || '').slice(0, MAX_CHARS).trim();
-    const attachments = m.role === 'user' && Array.isArray(m.attachments)
-      ? m.attachments.map(String).filter((p) => validPath(userId, p)).slice(0, MAX_FILES)
-      : [];
-    if (text || attachments.length) out.push({ role: m.role, text: text || '(no text)', attachments });
+    if (text) out.push({ role: m.role, text });
   }
   if (!out.length || out[out.length - 1].role !== 'user') return null;
-
-  // Only the newest few files are loaded, so a long chat can't balloon the prompt.
-  let budget = MAX_FILES;
-  for (let i = out.length - 1; i >= 0; i--) {
-    out[i].attachments = out[i].attachments.slice(0, budget);
-    budget -= out[i].attachments.length;
-  }
   return out;
 }
 
@@ -37,32 +39,64 @@ module.exports = async (req, res) => {
   const user = await requireUser(req, res);
   if (!user) return;
 
-  const messages = clean(req.body && req.body.messages, user.id);
+  const messages = clean(req.body && req.body.messages);
   if (!messages) return res.status(400).json({ error: 'Send {messages:[...]} ending with a user message.' });
   const mode = req.body && req.body.mode === 'cognition' ? 'cognition' : 'flash';
+  if (mode === 'flash' && !process.env.GOOGLE_API_KEY) {
+    return res.status(503).json({ error: 'GOOGLE_API_KEY is required for Flash and web search.' });
+  }
+  if (mode === 'cognition' && !process.env.OPENROUTER_API_KEY) {
+    return res.status(503).json({ error: 'OPENROUTER_API_KEY is required for Cognition mode.' });
+  }
 
   try {
-    // Load attachments and fold them into the messages they belong to.
-    for (const m of messages) {
-      m.files = await Promise.all(m.attachments.map((p) => loadFile(user.id, p, user.accessToken)));
-      for (const f of m.files) {
-        if (f.note) m.text += `\n\n[Attached file "${f.name}": ${f.note}]`;
-        else if (mode === 'cognition' && f.kind === 'image') m.text += `\n\n[Attached image "${f.name}": this mode can't view images; switch to flash.]`;
-        else if (f.kind === 'image') m.text += `\n\n[Attached image: ${f.name}]`;
-        else if (f.kind === 'pdf' && mode === 'flash' && f.buffer) m.text += `\n\n[Attached PDF: ${f.name}]`;
-        else if (f.text) m.text += `\n\n[Attached file "${f.name}" contents]\n${f.text}\n[end of ${f.name}]`;
-        else m.text += `\n\n[Attached file "${f.name}": no readable text found (it may be a scan; try flash mode).]`;
+    let usage = null;
+    if (user.isAnonymous) {
+      // Atomic database increment: simultaneous requests cannot exceed the limit.
+      usage = await consumeGuestMessage(user);
+      if (!usage || usage.allowed !== true) {
+        return res.status(429).json({
+          error: `This guest account has used all ${GUEST_MESSAGE_LIMIT} messages. Create an account to continue.`,
+          usage: { used: GUEST_MESSAGE_LIMIT, remaining: 0, limit: GUEST_MESSAGE_LIMIT },
+        });
       }
     }
 
-    const ctx = { userId: user.id, accessToken: user.accessToken, created: [] };
-    const system = systemPrompt(mode);
+    const lastUserText = messages[messages.length - 1].text;
+    if (mode === 'flash' && isCodeWritingRequest(lastUserText)) {
+      return res.status(200).json({
+        reply: 'This looks like a code-writing task. To give you complete, more reliable code and downloadable files, switch to Cognition mode. I have not generated code in Flash.',
+        mode,
+        suggestCognition: true,
+        usage: user.isAnonymous
+          ? { used: usage.used, remaining: usage.remaining, limit: GUEST_MESSAGE_LIMIT }
+          : null,
+      });
+    }
+
+    const ctx = { userId: user.id };
+    let system = systemPrompt(mode);
+    // Run search server-side for time-sensitive requests, so even a model that skips
+    // tool-calling receives grounded results. Search failure should not block the chat.
+    if (needsLiveSearch(lastUserText)) {
+      const searchContext = await Promise.race([
+        runTool(ctx, 'web_search', { query: lastUserText.slice(0, 300) }),
+        new Promise((resolve) => setTimeout(() => resolve('Google Search did not return in time; answer cautiously and state uncertainty.'), 18000)),
+      ]).catch(() => 'Google Search failed; answer cautiously and state uncertainty.');
+      system += `\n\nLIVE GOOGLE SEARCH RESULTS (retrieved for this request):\n${searchContext}\nUse these results for current claims, distinguish facts from uncertainty, and include source URLs when relevant. If the results do not answer the question, say so rather than guessing.`;
+    }
     const reply = mode === 'cognition'
       ? await runOpenRouter(ctx, system, messages)
       : await runGemini(ctx, system, messages);
 
-    return res.status(200).json({ reply, files: ctx.created, mode });
+    return res.status(200).json({
+      reply,
+      mode,
+      usage: user.isAnonymous
+        ? { used: usage.used, remaining: usage.remaining, limit: GUEST_MESSAGE_LIMIT }
+        : null,
+    });
   } catch (e) {
-    return res.status(502).json({ error: e.message });
+    return res.status(502).json({ error: e.message || 'The AI request failed.' });
   }
 };

@@ -44,7 +44,6 @@ button,input,textarea{font:inherit;color:inherit}button{white-space:nowrap}
 .nav[aria-pressed=true]{background:var(--accent-soft);color:var(--accent-strong);font-weight:600}
 html[data-scheme=dark] .nav[aria-pressed=true]{background:color-mix(in srgb,var(--accent) 22%,transparent);color:var(--text)}
 .nav.off{opacity:.5}
-#newdot{display:none;width:7px;height:7px;border-radius:50%;background:var(--accent);margin-left:auto}
 .side h4{margin:18px 10px 6px;font-size:.74rem;font-weight:600;color:var(--muted)}
 .swatches{display:flex;gap:.6rem;padding:2px 10px}
 .swatch{width:26px;height:26px;border-radius:50%;border:2px solid transparent;padding:0;cursor:pointer;position:relative;animation:bob 3.6s ease-in-out infinite;transition:transform .2s var(--ease)}
@@ -58,7 +57,7 @@ html[data-scheme=dark] .nav[aria-pressed=true]{background:color-mix(in srgb,var(
 .me{display:flex;align-items:center;gap:10px;padding:10px;border-top:1px solid var(--border);margin:6px -10px -12px;padding-bottom:calc(10px + env(safe-area-inset-bottom))}
 .avatar{width:32px;height:32px;border-radius:50%;background:var(--grad);background-size:200% 200%;color:var(--on-accent);display:grid;place-items:center;font-weight:700;font-size:.8rem;flex:none;animation:shift 6s ease infinite}
 .me-text{min-width:0;flex:1;line-height:1.25}
-#who{display:block;font-size:.85rem;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#who{display:block;font-size:.85rem;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}#quota{font-size:.72rem;color:var(--muted)}
 .me-sub{display:flex;align-items:center;gap:6px;font-size:.74rem;color:var(--text-dim)}
 .dot{width:7px;height:7px;border-radius:50%;background:var(--muted)}.dot.on{background:#16a34a;animation:pulse 2.2s ease-out infinite}
 .mini{border:1px solid var(--border);background:var(--panel);color:var(--text-dim);border-radius:8px;padding:5px 9px;font-size:.76rem;cursor:pointer;transition:transform .15s var(--ease),color .15s}
@@ -74,23 +73,23 @@ html[data-scheme=dark] .nav[aria-pressed=true]{background:color-mix(in srgb,var(
 .msg.bot::before{content:"";position:absolute;left:-38px;bottom:0;width:28px;height:28px;border-radius:50%;background:url(/logo.png) center/cover;box-shadow:0 0 0 1px var(--border)}
 .msg.err{align-self:center;color:var(--error);background:var(--error-soft);border-radius:999px;font-size:.8rem;padding:.4rem .9rem;animation:msgin .35s var(--ease),shake .5s ease .35s}
 .msg .tag{display:block;margin-top:6px;font-size:.74rem;opacity:.7}
-.dl-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;white-space:normal}
-.dl{display:inline-flex;align-items:center;gap:6px;max-width:100%;padding:4px 10px;border-radius:999px;border:1px solid color-mix(in srgb,currentColor 25%,transparent);background:color-mix(in srgb,currentColor 8%,transparent);color:inherit;font-size:.78rem;cursor:pointer;transition:transform .15s var(--ease),background .15s}
-.dl span{overflow:hidden;text-overflow:ellipsis}.dl:hover{transform:translateY(-2px);background:color-mix(in srgb,currentColor 16%,transparent)}
-.chip.uploading .n::before{content:"";display:inline-block;width:10px;height:10px;margin-right:6px;border:2px solid var(--border-strong);border-top-color:var(--accent);border-radius:50%;vertical-align:-1px;animation:spin .7s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
+  .code-artifact{margin:12px 0 4px;border:1px solid var(--border-strong);border-radius:12px;overflow:hidden;background:var(--panel);white-space:normal}
+  .code-artifact-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 10px;background:var(--panel-alt);border-bottom:1px solid var(--border);font-size:.78rem}
+  .code-artifact-name{font-weight:700;overflow-wrap:anywhere;color:var(--text)}
+  .code-download{border:0;border-radius:8px;padding:6px 10px;background:var(--accent);color:white;font-size:.78rem;font-weight:700;cursor:pointer}
+  .code-download:hover{filter:brightness(1.08)}
+  .code-artifact pre{margin:0;padding:12px;max-height:420px;overflow:auto;white-space:pre;tab-size:2;font:12px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--text)}
+  .download-all{margin-top:10px;border:1px solid var(--border-strong);border-radius:9px;padding:7px 11px;background:var(--panel);color:var(--text);font-size:.8rem;cursor:pointer}
 .typing{display:inline-flex;gap:4px;padding:.3rem 0}.typing i{width:6px;height:6px;border-radius:50%;background:var(--grad);animation:dots 1.1s ease-in-out infinite}
 .typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
 .hero{display:none;text-align:center;font-size:clamp(1.5rem,3.4vw,2rem);font-weight:600;letter-spacing:-.02em;margin:0 0 1.4rem;animation:rise .5s var(--ease) both}
 .hero b{background:var(--grad);background-size:200% 200%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shift 6s ease infinite}
 #chips{display:none;flex-wrap:wrap;gap:6px;width:min(780px,100%);margin:0 auto;padding:0 1.4rem 8px}#chips.has{display:flex}
 .chip{display:flex;align-items:center;gap:6px;padding:4px 10px;border:1px solid var(--border);border-radius:999px;font-size:.78rem;color:var(--text-dim);background:var(--panel-alt);animation:msgin .3s var(--ease)}
-.chip .n{max-width:220px;overflow:hidden;text-overflow:ellipsis;color:var(--text)}.chip button{background:none;border:0;cursor:pointer;color:var(--muted);padding:0}.chip.uploading{opacity:.6}
 #chat{display:flex;align-items:flex-end;gap:6px;width:min(780px,calc(100% - 2.8rem));margin:0 auto 1.1rem;padding:6px 6px 6px 8px;background:var(--panel-alt);border:1px solid var(--border);border-radius:26px;transition:border-color .15s,box-shadow .15s,background .15s}
 #chat:focus-within{border-color:var(--accent);background:var(--panel);box-shadow:0 0 0 3px var(--accent-soft)}
-#input{flex:1;resize:none;max-height:140px;border:0;outline:0;background:none;padding:9px 4px;line-height:1.5}#input::placeholder{color:var(--muted)}
+#input{flex:1;min-width:0;resize:none;max-height:140px;border:0;outline:0;background:none;padding:9px 4px;line-height:1.5}#input::placeholder{color:var(--muted)}
 .round{width:38px;height:38px;flex:none;border:0;border-radius:50%;display:grid;place-items:center;cursor:pointer;position:relative;overflow:hidden}
-#attach{background:none;color:var(--text-dim);transition:background .15s,transform .2s var(--ease)}#attach:hover{background:var(--border);transform:rotate(90deg)}
 #send{background:var(--grad);background-size:200% 200%;color:var(--on-accent);box-shadow:0 6px 16px -6px color-mix(in srgb,var(--accent) 60%,transparent);transition:transform .15s var(--ease),filter .15s}
 #send:hover:not(:disabled){transform:translateY(-2px) scale(1.06);filter:brightness(1.08)}#send:active:not(:disabled){transform:scale(.94)}#send:disabled{opacity:.45;cursor:wait}
 .ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,.55);transform:scale(0);animation:ripple .55s ease-out;pointer-events:none}
@@ -99,14 +98,9 @@ html[data-scheme=dark] .nav[aria-pressed=true]{background:color-mix(in srgb,var(
 .suggest button:hover{background:var(--panel-alt);color:var(--text);transform:translateX(4px)}
 .suggest svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 body.empty .stage{justify-content:center;padding-bottom:6vh}body.empty #log{display:none}body.empty .hero{display:block}body.empty #chat{margin-bottom:0}body.empty .suggest{display:flex}
-body.dragging::after{content:'Drop files to attach';position:fixed;inset:12px;z-index:30;display:flex;align-items:center;justify-content:center;border:2px dashed var(--accent);border-radius:18px;background:color-mix(in srgb,var(--bg) 88%,transparent);color:var(--accent);font-size:1.1rem;pointer-events:none}
-/* overlays: files + sign-in */
 .overlay{position:fixed;inset:0;background:rgba(10,10,20,.55);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;padding:16px;z-index:40}.overlay.open{display:flex}
 .box,#gate form{background:var(--panel);border:1px solid var(--border);border-radius:16px;box-shadow:0 20px 50px -20px rgba(20,20,30,.3);animation:msgin .4s var(--ease)}
-.box{width:min(560px,100%);max-height:80vh;display:flex;flex-direction:column}
 .box .top{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--border)}
-#fileList{overflow-y:auto;padding:6px 16px 12px}#fileList h3{margin:14px 0 2px;font-size:.78rem;font-weight:600;color:var(--muted)}
-.frow{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border)}.fn{flex:1;min-width:0;word-break:break-all;font-size:.85rem}.fm{color:var(--muted);font-size:.74rem}.none{color:var(--muted);font-size:.82rem;padding:8px 0}
 #gate{background:var(--bg);backdrop-filter:none;overflow:hidden;z-index:50}
 #gate::before,#gate::after{content:"";position:absolute;width:46vw;height:46vw;max-width:520px;max-height:520px;border-radius:50%;filter:blur(70px);opacity:.35;background:var(--grad);animation:blob 14s ease-in-out infinite}
 #gate::before{top:-12%;left:-10%}#gate::after{bottom:-14%;right:-8%;animation-delay:-7s;animation-direction:reverse}
@@ -134,11 +128,10 @@ html[data-scheme=dark] .tabs button[aria-pressed=true]{color:var(--text)}
 <aside class="side" id="side">
   <div class="side-brand"><img src="/logo.png" alt=""><strong>Glitch</strong></div>
   <button class="nav primary" id="clear" type="button"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg>New chat</button>
-  <button class="nav" id="filesBtn" type="button"><svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Files<span id="newdot"></span></button>
   <h4>Mode</h4>
   <div class="modes" role="group" aria-label="Mode">
     <button class="nav" type="button" data-mode="flash" aria-pressed="true" title="Fast and light; can also look at images and PDFs"><svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>Flash</button>
-    <button class="nav" type="button" data-mode="cognition" aria-pressed="false" title="Deeper reasoning and code (text only)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M12 8h4M12 16H8"/></svg>Cognition</button>
+    <button class="nav" type="button" data-mode="cognition" aria-pressed="false" title="Deeper reasoning, code generation, and downloadable files"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M12 8h4M12 16H8"/></svg>Cognition</button>
   </div>
   <h4>Accent</h4>
   <div class="swatches" id="swatches">
@@ -151,7 +144,7 @@ html[data-scheme=dark] .tabs button[aria-pressed=true]{color:var(--text)}
   <div class="spacer"></div>
   <div class="me">
     <div class="avatar" id="avatar">G</div>
-    <div class="me-text"><span id="who">Signed out</span><span class="me-sub"><span id="dot" class="dot"></span>Glitch</span></div>
+    <div class="me-text"><span id="who">Signed out</span><span class="me-sub"><span id="dot" class="dot"></span>Glitch</span><span id="quota" class="me-sub" aria-live="polite"></span></div>
     <button class="mini" id="signout" type="button">Sign out</button>
   </div>
 </aside>
@@ -160,23 +153,18 @@ html[data-scheme=dark] .tabs button[aria-pressed=true]{color:var(--text)}
   <div class="topbar"><button class="mini" id="menu" type="button" aria-label="Menu">Menu</button><img src="/logo.png" alt=""><strong>Glitch</strong></div>
   <main id="log" aria-live="polite"></main>
   <h2 class="hero">Ready when <b>you are.</b></h2>
-  <div id="chips"></div>
+  <div id="fileStatus" role="status" aria-live="polite" style="width:min(780px,calc(100% - 2.8rem));margin:0 auto 6px;color:var(--text-dim);font-size:.82rem"></div>
   <form id="chat">
-    <button class="round" id="attach" type="button" title="Attach files (PDF, Word, text, code, images; up to 25 MB each)" aria-label="Attach files"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
-    <input type="file" id="fileInput" multiple hidden>
+    <input id="filePicker" type="file" multiple hidden accept=".pdf,.txt,.md,.markdown,.json,.jsonl,.xml,.html,.htm,.css,.scss,.less,.js,.mjs,.cjs,.ts,.tsx,.jsx,.py,.ipynb,.java,.c,.h,.cpp,.hpp,.cs,.go,.rs,.php,.rb,.swift,.kt,.kts,.sql,.sh,.bash,.ps1,.bat,.yml,.yaml,.toml,.ini,.cfg,.conf,.env,.log,.csv,.tsv,.rtf,.docx,.xlsx,.xls,.ods,.odt,.tex,.vue,.svelte,.dart,.lua,.r,.R,.pl,.ex,.exs,.erl,.hs,.scala,.clj,.dockerfile,.makefile,.gradle,.properties,.gitignore,.diff,.patch">
+    <button class="round" id="attach" type="button" title="Attach files (PDF, code, documents, data)" aria-label="Attach files" style="background:var(--panel);border:1px solid var(--border);font-size:22px">＋</button>
     <textarea id="input" rows="1" placeholder="Ask Glitch" autocomplete="off"></textarea>
     <button class="round" id="send" type="submit" title="Send" aria-label="Send"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 12L20 4L14 20L11 13L4 12Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg></button>
   </form>
   <div class="suggest">
     <button type="button" data-prompt="Help me write or edit: "><svg viewBox="0 0 24 24"><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg>Write or edit</button>
-    <button type="button" data-attach><svg viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 00-2 2v14a2 2 0 002 2h12a2 2 0 002-2V9z"/><path d="M14 3v6h6"/></svg>Summarise a file</button>
     <button type="button" data-prompt="Search the web for "><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18"/></svg>Search the web</button>
   </div>
 </div>
-</div>
-
-<div id="files" class="overlay" role="dialog" aria-label="Files">
-  <div class="box"><div class="top"><strong>Your files</strong><button class="mini" id="filesClose" type="button">Close</button></div><div id="fileList"></div></div>
 </div>
 
 <div id="gate" class="overlay">
@@ -200,54 +188,91 @@ html[data-scheme=dark] .tabs button[aria-pressed=true]{color:var(--text)}
 (async () => {
   const $ = (id) => document.getElementById(id);
   const log = $('log'), input = $('input'), sendBtn = $('send');
-  const BUCKET = 'glitch-files';
-  const MAX_UPLOAD = 25 * 1024 * 1024;                          // matches the bucket limit in supabase.sql
-  const ALLOWED = new Set(['.txt','.md','.py','.js','.ts','.tsx','.jsx','.json','.csv','.html','.css','.java','.c','.cpp',
-    '.h','.cs','.go','.rs','.sql','.yaml','.yml','.xml','.log','.ini','.toml','.sh','.bat','.pdf','.docx','.png','.jpg','.jpeg','.gif','.webp']);
+  let attachedFiles = [];
+  const MAX_FILE_BYTES = 8 * 1024 * 1024, MAX_EXTRACTED_CHARS = 24000;
   const MODES = ['flash', 'cognition'];
   const MODE_KEY = 'glitch_mode';
 
   let mode = 'flash';
   try { const m = localStorage.getItem(MODE_KEY); if (MODES.includes(m)) mode = m; } catch {}
   let user = null;                                              // {id, email} when signed in
-  let history = [];                                             // [{role, content, attachments?, tag?}]
+  let history = [];                                             // [{role, content}]
   let busy = false;
   let sb = null;
   let authInitError = 'Supabase is still initializing. Please try again in a moment.';
-  const pending = [];                                           // attachments waiting to be sent
 
   const histKey = () => 'glitch_history_' + (user ? user.id : 'anon') + '_' + mode;
-  const seenKey = () => 'glitch_files_seen_' + (user ? user.id : 'anon');
-  const fmtSize = (n) => n < 1024 ? n + ' B' : n < 1048576 ? (n / 1024).toFixed(1) + ' KB' : (n / 1048576).toFixed(1) + ' MB';
-  const niceName = (n) => n.replace(/^[a-z0-9]{6,9}-/, '');     // drop the upload id prefix for display
 
-  // ---- chat history (kept in this browser, per account and mode) ----------------
-  function saveHistory() { try { localStorage.setItem(histKey(), JSON.stringify(history.slice(-40))); } catch {} }
+  // ---- temporary local chat history (email accounts only) ----------------------
+  // Stored only in this browser/device; guests are never persisted.
+  function saveHistory() {
+    if (!user || user.isAnonymous || !user.email) return;
+    try { localStorage.setItem(histKey(), JSON.stringify(history.slice(-40))); } catch (e) { console.warn('Could not save local chat history:', e); }
+  }
   function loadHistory() {
     history = [];
+    if (!user || user.isAnonymous || !user.email) return;
     try {
       const h = JSON.parse(localStorage.getItem(histKey()) || '[]');
-      if (Array.isArray(h)) history = h.filter(m => m && (m.role === 'user' || m.role === 'assistant') && typeof m.content === 'string');
+      if (Array.isArray(h)) history = h.filter(m => m && (m.role === 'user' || m.role === 'assistant') && typeof m.content === 'string').slice(-40).map(m => ({ role: m.role, content: m.content }));
     } catch {}
   }
 
-  function add(role, text, tag, links) {
+  const LANG_EXT = { javascript:'js', js:'js', typescript:'ts', ts:'ts', tsx:'tsx', jsx:'jsx', python:'py', py:'py', html:'html', css:'css', json:'json', jsonc:'json', bash:'sh', sh:'sh', shell:'sh', java:'java', c:'c', cpp:'cpp', csharp:'cs', csharp:'cs', go:'go', rust:'rs', ruby:'rb', php:'php', sql:'sql', yaml:'yml', yml:'yml', markdown:'md', md:'md', xml:'xml', text:'txt', plaintext:'txt', toml:'toml', kotlin:'kt', swift:'swift', powershell:'ps1', r:'r', vue:'vue', svelte:'svelte' };
+  function safeFilename(name, fallback) {
+    let clean = String(name || '').trim().replace(/^['"`]|['"`]$/g, '').replace(/[^a-zA-Z0-9._-]+/g, '-').replace(/^\.+/, '');
+    if (!clean || clean.length > 120 || !clean.includes('.')) clean = fallback;
+    return clean;
+  }
+  function findArtifacts(text) {
+    const artifacts = [];
+    const re = /```([^\n`]*)\n([\s\S]*?)```/g;
+    let match, index = 0;
+    while ((match = re.exec(text))) {
+      const header = match[1].trim();
+      const filenameMatch = header.match(/(?:filename|file)\s*=\s*([^\s]+)/i) || header.match(/(?:^|\s)([a-zA-Z0-9_.-]+\.(?:py|js|ts|tsx|jsx|html|css|json|md|txt|java|c|cpp|h|hpp|cs|go|rs|rb|php|sql|sh|yml|yaml|xml|toml|kt|swift|vue|svelte|ipynb|csv|svg|env|dockerfile))\b/i);
+      const lang = (header.split(/\s+/)[0] || '').toLowerCase();
+      const code = match[2].replace(/^\n+|\n+$/g, '');
+      const explicit = filenameMatch ? filenameMatch[1].replace(/^['"`]|['"`]$/g, '') : '';
+      const filename = safeFilename(explicit, `generated-${++index}.${LANG_EXT[lang] || 'txt'}`);
+      artifacts.push({ start: match.index, end: re.lastIndex, raw: match[0], filename, code, lang });
+    }
+    return artifacts;
+  }
+  function downloadArtifact(filename, content) {
+    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = safeFilename(filename, 'generated-file.txt');
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+  function renderBotContent(el, text) {
+    const artifacts = findArtifacts(text);
+    if (!artifacts.length) { el.textContent = text; return; }
+    let cursor = 0;
+    const all = [];
+    artifacts.forEach((a) => {
+      if (a.start > cursor) { const before = text.slice(cursor, a.start); if (before) { const p = document.createElement('div'); p.textContent = before; el.appendChild(p); } }
+      const card = document.createElement('section'); card.className = 'code-artifact';
+      const head = document.createElement('div'); head.className = 'code-artifact-head';
+      const name = document.createElement('span'); name.className = 'code-artifact-name'; name.textContent = '📄 ' + a.filename;
+      const button = document.createElement('button'); button.type = 'button'; button.className = 'code-download'; button.textContent = 'Download file';
+      button.addEventListener('click', () => downloadArtifact(a.filename, a.code));
+      head.append(name, button);
+      const pre = document.createElement('pre'); const code = document.createElement('code'); code.textContent = a.code; pre.appendChild(code);
+      card.append(head, pre); el.appendChild(card);
+      all.push(a); cursor = a.end;
+    });
+    const after = text.slice(cursor); if (after.trim()) { const p = document.createElement('div'); p.textContent = after; el.appendChild(p); }
+    if (all.length > 1) {
+      const note = document.createElement('div'); note.className = 'tag'; note.textContent = all.length + ' downloadable files generated. Use each Download file button.'; el.appendChild(note);
+    }
+  }
+  function add(role, text, tag) {
     const el = document.createElement('div');
     document.body.classList.remove('empty');
     el.className = 'msg ' + role;
-    el.textContent = text;                                      // textContent: model output is never parsed as HTML
+    if (role === 'bot') renderBotContent(el, text); else el.textContent = text;
     if (tag) { const t = document.createElement('span'); t.className = 'tag'; t.textContent = tag; el.appendChild(t); }
-    if (links && links.length) {
-      const row = document.createElement('div'); row.className = 'dl-row';
-      links.forEach((l) => {
-        const b = document.createElement('button'); b.type = 'button'; b.className = 'dl'; b.title = 'Download ' + l.label;
-        b.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>';
-        const t = document.createElement('span'); t.textContent = l.label; b.appendChild(t);
-        b.addEventListener('click', () => downloadFile({ path: l.path, name: l.path.split('/').pop() }));
-        row.appendChild(b);
-      });
-      el.appendChild(row);
-    }
     log.appendChild(el);
     log.scrollTop = log.scrollHeight;
     return el;
@@ -257,17 +282,12 @@ html[data-scheme=dark] .tabs button[aria-pressed=true]{color:var(--text)}
     log.textContent = '';
     document.body.classList.toggle('empty', !history.length);
     if (!history.length) return;
-    history.forEach(m => {
-      const links = user ? (m.attachments || []).map(a => ({ path: a.path, label: a.name }))
-        .concat((m.made || []).map(n => ({ path: user.id + '/generated/' + n, label: n }))) : [];
-      add(m.role === 'user' ? 'user' : 'bot', m.content, '', links);
-    });
+    history.forEach(m => add(m.role === 'user' ? 'user' : 'bot', m.content));
   }
 
   // ---- talking to the server ------------------------------------------------
   async function api(path, opts = {}) {
-    const { data } = await sb.auth.getSession();
-    const token = data.session ? data.session.access_token : '';
+    const token = user && user.accessToken ? user.accessToken : '';
     const r = await fetch(path, { ...opts, headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token, ...(opts.headers || {}) } });
     let body = {}; try { body = await r.json(); } catch {}
     return { ok: r.ok, status: r.status, data: body };
@@ -311,16 +331,17 @@ html[data-scheme=dark] .tabs button[aria-pressed=true]{color:var(--text)}
     }
   });
 
-  function onSignedIn(u) {
-    user = { id: u.id, email: u.email || '', isAnonymous: Boolean(u.is_anonymous) };
+  function onSignedIn(u, accessToken) {
+    const changedUser = !user || user.id !== u.id;
+    user = { id: u.id, email: u.email || '', isAnonymous: Boolean(u.is_anonymous), accessToken };
     $('who').textContent = user.isAnonymous ? 'Guest' : user.email; $('avatar').textContent = user.isAnonymous ? 'G' : (user.email[0] || 'U').toUpperCase(); $('dot').classList.add('on');
     $('gate').classList.remove('open');
-    applyMode(); checkNewFiles();
+    if (changedUser) history = [];
+    applyMode(); refreshUsage();
   }
   function onSignedOut() {
-    user = null; pending.length = 0; renderChips();
-    $('who').textContent = 'Signed out'; $('avatar').textContent = 'G'; $('dot').classList.remove('on'); $('newdot').style.display = 'none';
-    $('files').classList.remove('open');
+    user = null; history = [];
+    $('who').textContent = 'Signed out'; $('avatar').textContent = 'G'; $('dot').classList.remove('on'); $('quota').textContent = '';
     applyMode(); openGate();
   }
   $('guestSignIn').addEventListener('click', async () => {
@@ -339,22 +360,107 @@ html[data-scheme=dark] .tabs button[aria-pressed=true]{color:var(--text)}
   });
   $('signout').addEventListener('click', () => sb && sb.auth.signOut());
 
+  // ---- file reading: PDF, Office documents, code and plain-text formats --------
+  const TEXT_EXTS = new Set(('txt md markdown json jsonl xml html htm css scss less js mjs cjs ts tsx jsx py ipynb java c h cpp hpp cs go rs php rb swift kt kts sql sh bash ps1 bat yml yaml toml ini cfg conf env log csv tsv tex vue svelte dart lua r pl ex exs erl hs scala clj diff patch gitignore dockerfile makefile gradle properties rtf').split(' '));
+  function extOf(name) { return (name.split('.').pop() || '').toLowerCase(); }
+  async function loadScript(src, marker) {
+    if (window[marker]) return;
+    await new Promise((resolve, reject) => { const script = document.createElement('script'); script.src = src; script.onload = resolve; script.onerror = () => reject(new Error('Could not load the document reader library. Check your internet connection.')); document.head.appendChild(script); });
+  }
+  async function extractFile(file) {
+    if (file.size > MAX_FILE_BYTES) throw new Error('File is larger than 8 MB.');
+    const ext = extOf(file.name);
+    if (ext === 'pdf') {
+      await loadScript('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js', 'pdfjsLib');
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+      const pdf = await pdfjsLib.getDocument({ data: await file.arrayBuffer() }).promise;
+      const pages = [];
+      for (let i = 1; i <= pdf.numPages; i++) {
+        const page = await pdf.getPage(i), content = await page.getTextContent();
+        pages.push('[Page ' + i + '] ' + content.items.map(item => item.str).join(' '));
+        if (pages.join('\n').length > MAX_EXTRACTED_CHARS) break;
+      }
+      return pages.join('\n').slice(0, MAX_EXTRACTED_CHARS) || '[No selectable text found. This may be a scanned PDF requiring OCR.]';
+    }
+    if (ext === 'docx') {
+      await loadScript('https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.8.0/mammoth.browser.min.js', 'mammoth');
+      const result = await mammoth.extractRawText({ arrayBuffer: await file.arrayBuffer() });
+      return result.value.slice(0, MAX_EXTRACTED_CHARS);
+    }
+    if (['xlsx', 'xls', 'ods'].includes(ext)) {
+      await loadScript('https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js', 'XLSX');
+      const book = XLSX.read(await file.arrayBuffer(), { type: 'array' });
+      return book.SheetNames.map(name => 'Sheet: ' + name + '\n' + XLSX.utils.sheet_to_csv(book.Sheets[name])).join('\n\n').slice(0, MAX_EXTRACTED_CHARS);
+    }
+    if (ext === 'odt') throw new Error('ODT is not supported yet. Please export it as DOCX or TXT.');
+    if (TEXT_EXTS.has(ext) || !file.name.includes('.')) return (await file.text()).slice(0, MAX_EXTRACTED_CHARS);
+    throw new Error('Unsupported file type. Try PDF, DOCX, XLSX/XLS/ODS, CSV, TXT, or a source-code/text file.');
+  }
+  $('attach').addEventListener('click', () => $('filePicker').click());
+  $('filePicker').addEventListener('change', async (e) => {
+    const files = Array.from(e.target.files || []); e.target.value = '';
+    for (const file of files) {
+      $('fileStatus').textContent = 'Reading ' + file.name + '…';
+      try {
+        const content = await extractFile(file);
+        attachedFiles.push({ name: file.name, content });
+      } catch (err) { add('err', file.name + ': ' + (err.message || 'Could not read this file.')); }
+    }
+    $('fileStatus').textContent = attachedFiles.length ? attachedFiles.length + ' file(s) ready: ' + attachedFiles.map(f => f.name).join(', ') + ' — click × to clear all' : '';
+    if (attachedFiles.length) $('fileStatus').style.cursor = 'pointer';
+  });
+  $('fileStatus').addEventListener('click', () => { attachedFiles = []; $('fileStatus').textContent = ''; });
+
   // ---- sending a message --------------------------------------------------------
-  async function send(text, attachments) {
+  async function refreshUsage() {
+    if (!user) return;
+    if (!user.isAnonymous) { $('quota').textContent = ''; return; }
+    try {
+      const { ok, data } = await api('/api/usage');
+      if (ok && data.usage) $('quota').textContent = `${data.usage.remaining}/${data.usage.limit} guest messages left`;
+    } catch {}
+  }
+
+  async function send(text) {
     busy = true; sendBtn.disabled = true;
-    history.push({ role: 'user', content: text, attachments });
+    history.push({ role: 'user', content: text });
     saveHistory(); render();
-    const wait = add('bot', ''); wait.innerHTML = '<span class="typing"><i></i><i></i><i></i></span>';
-    const payload = history.map(m => ({ role: m.role, content: m.content, attachments: (m.attachments || []).map(a => a.path) }));
-    try {   // mode buttons are locked while busy, so `mode` can't change mid-request
+    const wait = add('bot', '');
+    wait.innerHTML = '<span class="typing"><i></i><i></i><i></i></span>';
+    const payload = history.map(m => ({ role: m.role, content: m.content }));
+    try {
       const { ok, status, data } = await api('/api/chat', { method: 'POST', body: JSON.stringify({ messages: payload, mode }) });
       wait.remove();
       if (status === 401) { history.pop(); saveHistory(); await sb.auth.signOut(); return; }
-      if (!ok) throw new Error(data.error || 'Request failed (' + status + ')');
-      const made = data.files || [];
-      history.push({ role: 'assistant', content: data.reply, made });
+      if (!ok) {
+        if (status === 429) {
+          $('quota').textContent = '0/30 guest messages left';
+          add('err', data.error || 'Guest message limit reached.');
+          return;
+        }
+        throw new Error(data.error || 'Request failed (' + status + ')');
+      }
+      history.push({ role: 'assistant', content: data.reply });
       saveHistory(); render();
-      if (made.length) $('newdot').style.display = 'inline-block';
+      if (data.suggestCognition) {
+        const lastBot = log.querySelector('.msg.bot:last-of-type');
+        if (lastBot) {
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.className = 'code-download';
+          button.style.marginTop = '10px';
+          button.textContent = 'Switch to Cognition and try again';
+          button.addEventListener('click', () => {
+            if (busy) return;
+            mode = 'cognition';
+            try { localStorage.setItem(MODE_KEY, mode); } catch {}
+            applyMode();
+            send(text);
+          });
+          lastBot.appendChild(button);
+        }
+      }
+      if (data.usage) $('quota').textContent = `${data.usage.remaining}/${data.usage.limit} guest messages left`;
     } catch (e) {
       wait.remove(); add('err', e.message);
     } finally {
@@ -365,13 +471,12 @@ html[data-scheme=dark] .tabs button[aria-pressed=true]{color:var(--text)}
   $('chat').addEventListener('submit', (e) => {
     e.preventDefault();
     const typed = input.value.trim();
-    const ready = pending.filter(f => f.status === 'ready');
-    if ((!typed && !ready.length) || busy || !user) return;
-    if (pending.some(f => f.status === 'uploading')) { add('err', 'Still uploading. Patience.'); return; }
+    if ((!typed && !attachedFiles.length) || busy || !user) return;
+    const fileContext = attachedFiles.map(f => '\n\n--- Attached file: ' + f.name + ' ---\n' + f.content + '\n--- End file ---').join('');
+    const message = (typed || 'Please read and analyze the attached file(s).') + fileContext;
+    attachedFiles = []; $('fileStatus').textContent = '';
     input.value = ''; input.style.height = 'auto';
-    const attachments = ready.map(f => ({ path: f.path, name: f.name }));
-    pending.length = 0; renderChips();
-    send(typed || 'Have a look at the attached file(s).', attachments);
+    send(message);
   });
   input.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); $('chat').requestSubmit(); } });
   input.addEventListener('input', () => { input.style.height = 'auto'; input.style.height = Math.min(input.scrollHeight, 140) + 'px'; });
@@ -380,113 +485,6 @@ html[data-scheme=dark] .tabs button[aria-pressed=true]{color:var(--text)}
     if (history.length && !confirm('Start a new chat? This replaces the saved ' + mode + ' conversation.')) return;
     history = []; saveHistory(); render(); document.body.classList.remove('nav-open'); input.focus();
   });
-
-  // ---- uploads: browser -> Supabase Storage, no server in between -------------------
-  function renderChips() {
-    const box = $('chips'); box.textContent = ''; box.classList.toggle('has', pending.length > 0);
-    pending.forEach((f) => {
-      const chip = document.createElement('div'); chip.className = 'chip' + (f.status === 'uploading' ? ' uploading' : '');
-      const n = document.createElement('span'); n.className = 'n'; n.textContent = f.name;
-      const x = document.createElement('button'); x.type = 'button'; x.textContent = '×'; x.title = 'Remove';
-      x.addEventListener('click', () => { pending.splice(pending.indexOf(f), 1); renderChips(); });
-      chip.append(n, x); box.appendChild(chip);
-    });
-  }
-
-  async function uploadFile(file) {
-    if (!user) return openGate();
-    const dot = file.name.lastIndexOf('.');
-    const ext = dot < 0 ? '' : file.name.slice(dot).toLowerCase();
-    if (!ALLOWED.has(ext)) { add('err', file.name + ': that file type isn\'t supported.'); return; }
-    if (file.size > MAX_UPLOAD) { add('err', file.name + ' is over 25 MB.'); return; }
-    if (!file.size) { add('err', file.name + ' is empty.'); return; }
-    const stem = file.name.slice(0, dot).replace(/[^A-Za-z0-9._-]/g, '_').replace(/^[._]+/, '').slice(0, 80) || 'file';
-    const path = user.id + '/uploads/' + Date.now().toString(36) + '-' + stem + ext;
-    const item = { name: file.name, path, status: 'uploading' };
-    pending.push(item); renderChips();
-    const { error } = await sb.storage.from(BUCKET).upload(path, file, { contentType: file.type || 'application/octet-stream', upsert: false });
-    if (error) { pending.splice(pending.indexOf(item), 1); add('err', file.name + ': ' + error.message); }
-    else item.status = 'ready';
-    renderChips();
-  }
-
-  $('attach').addEventListener('click', () => $('fileInput').click());
-  $('fileInput').addEventListener('change', (e) => { [...e.target.files].forEach(uploadFile); e.target.value = ''; });
-  let dragDepth = 0;
-  window.addEventListener('dragenter', (e) => { if (e.dataTransfer && [...e.dataTransfer.types].includes('Files')) { dragDepth++; document.body.classList.add('dragging'); } });
-  window.addEventListener('dragleave', () => { dragDepth = Math.max(0, dragDepth - 1); if (!dragDepth) document.body.classList.remove('dragging'); });
-  window.addEventListener('dragover', (e) => e.preventDefault());
-  window.addEventListener('drop', (e) => {
-    e.preventDefault(); dragDepth = 0; document.body.classList.remove('dragging');
-    [...(e.dataTransfer ? e.dataTransfer.files : [])].forEach(uploadFile);
-  });
-
-  // ---- files panel: list / download / delete (straight from Supabase Storage) ----------
-  async function listFolder(folder) {
-    const { data, error } = await sb.storage.from(BUCKET).list(user.id + '/' + folder, { limit: 100, sortBy: { column: 'created_at', order: 'desc' } });
-    if (error) throw error;
-    return (data || []).filter(o => o.id).map(o => ({
-      folder, name: o.name, path: user.id + '/' + folder + '/' + o.name,
-      size: (o.metadata && o.metadata.size) || 0, created: o.created_at ? Date.parse(o.created_at) : 0,
-    }));
-  }
-
-  async function checkNewFiles() {
-    if (!user) return;
-    try {
-      const gen = await listFolder('generated');
-      const seen = Number(localStorage.getItem(seenKey()) || 0);
-      $('newdot').style.display = gen.some(f => f.created > seen) ? 'inline-block' : 'none';
-    } catch {}
-  }
-
-  async function downloadFile(f) {
-    const { data, error } = await sb.storage.from(BUCKET).download(f.path);
-    if (error) { add('err', niceName(f.name) + ': ' + error.message); return; }
-    const url = URL.createObjectURL(data);
-    const a = document.createElement('a'); a.href = url; a.download = niceName(f.name);
-    document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 10000);
-  }
-
-  async function removeFile(f) {
-    if (!confirm('Delete ' + niceName(f.name) + '?')) return;
-    const { error } = await sb.storage.from(BUCKET).remove([f.path]);
-    if (error) add('err', niceName(f.name) + ': ' + error.message);
-    openFiles();
-  }
-
-  async function openFiles() {
-    if (!user) return openGate();
-    const list = $('fileList');
-    $('files').classList.add('open');
-    list.textContent = 'Loading…';
-    let groups;
-    try { groups = [['Made by Glitch', await listFolder('generated')], ['Your uploads', await listFolder('uploads')]]; }
-    catch (e) { list.textContent = 'Could not load files: ' + e.message; return; }
-    list.textContent = '';
-    groups.forEach(([title, files]) => {
-      const h = document.createElement('h3'); h.textContent = title; list.appendChild(h);
-      if (!files.length) { const n = document.createElement('div'); n.className = 'none'; n.textContent = title === 'Made by Glitch' ? 'Nothing yet. Ask me to write some code.' : 'Nothing uploaded yet.'; list.appendChild(n); }
-      files.forEach((f) => {
-        const row = document.createElement('div'); row.className = 'frow';
-        const name = document.createElement('div'); name.className = 'fn'; name.textContent = niceName(f.name);
-        const meta = document.createElement('div'); meta.className = 'fm'; meta.textContent = fmtSize(f.size);
-        const dl = document.createElement('button'); dl.type = 'button'; dl.className = 'mini'; dl.textContent = 'download';
-        dl.addEventListener('click', () => downloadFile(f));
-        const del = document.createElement('button'); del.type = 'button'; del.className = 'mini'; del.textContent = 'delete'; del.setAttribute('aria-label', 'Delete ' + niceName(f.name));
-        del.addEventListener('click', () => removeFile(f));
-        row.append(name, meta, dl, del); list.appendChild(row);
-      });
-    });
-    const gen = groups[0][1];
-    try { localStorage.setItem(seenKey(), String(Math.max(0, ...gen.map(f => f.created)))); } catch {}
-    $('newdot').style.display = 'none';
-  }
-  $('filesBtn').addEventListener('click', openFiles);
-  $('filesClose').addEventListener('click', () => $('files').classList.remove('open'));
-  $('files').addEventListener('click', (e) => { if (e.target === $('files')) $('files').classList.remove('open'); });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') $('files').classList.remove('open'); });
 
   // ---- modes ------------------------------------------------------------------
   function applyMode() {
@@ -512,10 +510,9 @@ html[data-scheme=dark] .tabs button[aria-pressed=true]{color:var(--text)}
     root.dataset.scheme = dark ? 'light' : 'dark'; try { localStorage.setItem('glitch_scheme', root.dataset.scheme); } catch {}
   });
   $('menu').addEventListener('click', () => document.body.classList.toggle('nav-open'));
-  $('side').addEventListener('click', (e) => { if (e.target.closest('[data-mode],#filesBtn')) document.body.classList.remove('nav-open'); });
+  $('side').addEventListener('click', (e) => { if (e.target.closest('[data-mode]')) document.body.classList.remove('nav-open'); });
   document.addEventListener('click', (e) => { if (document.body.classList.contains('nav-open') && !e.target.closest('#side,#menu')) document.body.classList.remove('nav-open'); });
   document.querySelectorAll('.suggest button').forEach(b => b.addEventListener('click', () => {
-    if (b.hasAttribute('data-attach')) return $('fileInput').click();
     input.value = b.dataset.prompt; input.focus();
   }));
   sendBtn.addEventListener('click', (e) => {
@@ -544,14 +541,15 @@ html[data-scheme=dark] .tabs button[aria-pressed=true]{color:var(--text)}
     if (!cfg.flash) { const b = document.querySelector('[data-mode="flash"]'); b.classList.add('off'); b.title += ' (not configured on the server)'; }
 
     sb.auth.onAuthStateChange((event, session) => {
-      // Never await Supabase calls inside this callback (it can deadlock the client); just update the UI.
-      if (session && session.user) { if (!user || user.id !== session.user.id) onSignedIn(session.user); }
+      // Use the access token supplied in the event; do not call Supabase again inside this callback.
+      if (session && session.user) onSignedIn(session.user, session.access_token);
       else if (event === 'SIGNED_OUT') onSignedOut();
     });
     const { data, error } = await sb.auth.getSession();
     if (error) throw error;
     authInitError = 'Supabase authentication is unavailable. Check your Supabase project URL and anon key.';
-    if (!data.session) openGate();
+    if (data.session) onSignedIn(data.session.user, data.session.access_token);
+    else openGate();
   } catch (error) {
     authInitError = 'Authentication setup failed: ' + (error && error.message ? error.message : 'unknown error') + '. Check Vercel environment variables and /vendor/supabase.js.';
     openGate(authInitError);

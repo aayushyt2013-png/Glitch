@@ -6,8 +6,5 @@
   "engines": {
     "node": ">=20"
   },
-  "dependencies": {
-    "mammoth": "^1.13.0",
-    "unpdf": "^1.9.1"
-  }
+  "dependencies": {}
 }

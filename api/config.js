@@ -11,7 +11,7 @@ module.exports = (req, res) => {
     missing,
     supabaseUrl: process.env.SUPABASE_URL || '',
     supabaseAnonKey: process.env.SUPABASE_ANON_KEY || '',
-    cognition: Boolean(process.env.OPENROUTER_API_KEY && process.env.OPENROUTER_MODEL),
+    cognition: Boolean(process.env.OPENROUTER_API_KEY),
     flash: Boolean(process.env.GOOGLE_API_KEY),
   });
 };
